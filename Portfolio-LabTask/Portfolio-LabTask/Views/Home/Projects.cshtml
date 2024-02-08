@@ -6,7 +6,23 @@
 <h2>Projects</h2>
 <hr /><br />
 <ul>
-    <li><b>Webtech</b>
+    @foreach(var item in ViewBag.ProjectList) { 
+        <li><b>@item.name</b>
+            <ul>
+                <li>
+                    Title: @item.project
+                </li>
+                <li>
+                    Description: 
+                    <br />
+                    @item.description
+                    <br />
+                </li>
+            </ul>
+        </li>
+    }
+
+    <!--<li><b>Webtech</b>
         <ul>
             <li>Title: Into The Green</li>
             <li>
@@ -121,5 +137,5 @@
                 Technologies Used: R
             </li>
         </ul>
-    </li>
+    </li>-->
 </ul>

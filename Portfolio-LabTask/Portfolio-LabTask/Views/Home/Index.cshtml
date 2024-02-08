@@ -14,11 +14,16 @@
     }
 </style>
 
+@{ 
+    string[] linkSplit = ViewBag.Person.githubLink.Split('/');
+    string linkName = linkSplit[linkSplit.Length - 1];
+}
+
 <main>
     <h1>Portfolio Home</h1><hr /><br />
-    <label>Name</label><span>:</span> Tazrif Yamshit Raim<br />
-    <label>ID</label><span>:</span> 21-45012-2<br />
-    <label>Email</label><span>:</span> tazrifraim@gmail.com<br />
-    <label>Github Profile Link</label><span>:</span> <a href="https://github.com/Tazrif-Raim" target="_blank">Tazrif-Raim</a><br />
+    <label>Name</label><span>:</span> @ViewBag.Person.name<br />
+    <label>ID</label><span>:</span> @ViewBag.Person.id<br />
+    <label>Email</label><span>:</span> @ViewBag.Person.email<br />
+    <label>Github Profile Link</label><span>:</span> <a href="@ViewBag.Person.githubLink" target="_blank"> @linkName</a><br />
 
 </main>
