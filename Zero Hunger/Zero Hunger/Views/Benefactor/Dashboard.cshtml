@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Benefactor Dashboard</h2>
+
+<div>
+    <h3>User: @ViewBag.Username</h3>
+    <h3><a href="@Url.Action("CollectionRequest", "Benefactor")">Upload for Collection</a></h3>
+    <h3><a href="@Url.Action("DonationHistory", "Benefactor")">Donation History</a></h3>
+    <h3><a href="@Url.Action("EditProfile", "Benefactor")">Edit Profile</a></h3>
+    <h3><a href="@Url.Action("Logout", "Auth")">Logout</a></h3>
+</div>
+

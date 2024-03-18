@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "EditProfile";
+}
+
+
+
+<h2>Edit Profile</h2>
+
+<div>
+    Name: @ViewBag.Name;<br />
+    Username: @ViewBag.Username;<br />
+
+    <form action="@Url.Action("ChangeName", "Benefactor")" method="post">
+        New Name: <input type="text" name="Name"/>
+        <button type="submit">Change</button>
+    </form>
+
+    <form action="@Url.Action("ChangeUsername", "Benefactor")" method="post">
+        New Username: <input type="text" name="Username"/>
+        <button type="submit">Change</button>
+    </form>
+
+    <form action="@Url.Action("ChangePassword", "Benefactor")" method="post">
+        Current Password: <input type="text" name="CurrentPassword"/><br />
+        New Password: <input type="password" name="NewPassword"/><br />
+        Confirm Password: <input type="password" name="ConfirmPassword"/><br />
+        <button type="submit">Change</button>
+    </form>
+
+    @if (ViewBag.Error != null)
+     {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+     }
+
+</div>
+
+<a href="@Url.Action("Dashboard", "Benefactor")">Back to Dashboard</a>
+

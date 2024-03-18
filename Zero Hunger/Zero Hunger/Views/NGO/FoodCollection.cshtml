@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "FoodCollection";
+}
+<a href="@Url.Action("Dashboard", "NGO")">Back to Dashboard</a>
+
+
+<h2>FoodCollection</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Donation Meals</th>
+        <th>Uplaod Time</th>
+        <th>Expire Time</th>
+        <th>Collection Time</th>
+        <th>Amount(Kg/s)</th>
+        <th>Status</th>
+        <th>Collector ID</th>
+        <th>Assign Employee</th>
+    </tr>
+    @foreach (var item in ViewBag.foodList)
+     {
+        <tr>
+            <th>@item.Name</th>
+            <th>@item.UploadDate</th>
+            <th>@item.ExpireTime</th>
+            @if (item.CompleteTime == null)
+            {
+                <th>-</th>
+            }
+            else
+            {
+                <th>@item.CompleteTime</th>
+            }
+            <th>@item.Amount</th>
+            <th>@item.StatusName</th>
+            @if (item.AssignedTo == null)
+            {
+                <th>-</th>
+            }
+            else
+            {
+                <th>@item.AssignedTo</th>
+            }
+            @if(item.StatusName == "Pending")
+            {
+                <th>
+                    <form action="/NGO/assignEmployee" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <select name="employee">
+                            @foreach (var employee in ViewBag.employees)
+                            {
+                                <option value="@employee.Id">@employee.Name</option>
+                            }
+                        </select>
+                        <input type="submit" name="Accept" value="Accept" class="btn btn-success" />
+                    </form>
+                </th>
+                
+            }
+        </tr>
+     }
+</table>

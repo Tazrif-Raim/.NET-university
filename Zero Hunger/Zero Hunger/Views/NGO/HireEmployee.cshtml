@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "HireEmployee";
+}
+
+<a href="@Url.Action("Dashboard", "NGO")">Back to Dashboard</a>
+
+<h2>Hire Employee</h2>
+
+<div>
+    <form action="@Url.Action("HireEmployee", "NGO")" method="post">
+        Name: <input type="text" name="name" value="" />
+        <input type="submit"/>
+    </form>
+</div>
+
+@if(ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">@ViewBag.Error</div>
+            }
+@if(ViewBag.Success != null)
+            {
+                <div class="alert alert-success">@ViewBag.Success</div>
+            }

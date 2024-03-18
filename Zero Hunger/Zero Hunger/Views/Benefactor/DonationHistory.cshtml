@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "DonationHistory";
+}
+
+<a href="@Url.Action("Dashboard", "Benefactor")">Back to Dashboard</a>
+
+<h2>Donation History</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Donation Meals</th>
+        <th>Uplaod Time</th>
+        <th>Expire Time</th>
+        <th>Collection Time</th>
+        <th>Amount(Kg/s)</th>
+        <th>Status</th>
+        <th>Collector ID</th>
+        <th>Collected</th>
+        <th>Cancel</th>
+    </tr>
+    @foreach(var item in ViewBag.Donations)
+     {
+        <tr>
+            <th>@item.Name</th>
+            <th>@item.UploadDate</th>
+            <th>@item.ExpireTime</th>
+            @if (item.CompleteTime == null)
+            {
+                <th>-</th>
+            }
+            else
+            {
+                <th>@item.CompleteTime</th>
+            }
+            <th>@item.Amount</th>
+            <th>@item.StatusName</th>
+            @if (item.AssignedTo == null)
+            {
+                <th>-</th>
+            }
+            else
+            {
+                <th>@item.AssignedTo</th>
+            }
+            @if(item.StatusName == "Accepted")
+            { 
+                <th><a href="/Benefactor/CollectedMeal/@item.Id" class="btn btn-success">Collected</a></th>
+            }
+            else
+            {
+                <th>-</th>
+            }
+            @if(item.StatusName == "Pending" || item.StatusName == "Accepted")
+            { 
+                <th><a href="/Benefactor/CancelledMeal/@item.Id" class="btn btn-danger">Cancel</a></th>
+            }
+            else
+            { 
+                <th>-</th>
+            }
+        </tr>
+     }
+</table>
