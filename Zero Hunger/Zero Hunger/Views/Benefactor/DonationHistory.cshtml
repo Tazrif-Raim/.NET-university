@@ -3,7 +3,7 @@
     ViewBag.Title = "DonationHistory";
 }
 
-<a href="@Url.Action("Dashboard", "Benefactor")">Back to Dashboard</a>
+<a href="@Url.Action("Filter", "Benefactor")">Back to Filter</a>
 
 <h2>Donation History</h2>
 
@@ -45,7 +45,7 @@
             }
             @if(item.StatusName == "Accepted")
             { 
-                <th><a href="/Benefactor/CollectedMeal/@item.Id" class="btn btn-success">Collected</a></th>
+                <th><a href="/Benefactor/CollectedMeal/@item.Id?filter=@ViewBag.filter" class="btn btn-success">Collected</a></th>
             }
             else
             {
@@ -53,7 +53,7 @@
             }
             @if(item.StatusName == "Pending" || item.StatusName == "Accepted")
             { 
-                <th><a href="/Benefactor/CancelledMeal/@item.Id" class="btn btn-danger">Cancel</a></th>
+                <th><a href="/Benefactor/CancelledMeal/@item.Id?filter=@ViewBag.filter" class="btn btn-danger">Cancel</a></th>
             }
             else
             { 

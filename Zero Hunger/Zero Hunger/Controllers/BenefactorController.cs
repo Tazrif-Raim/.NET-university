@@ -171,7 +171,7 @@ namespace Zero_Hunger.Controllers
             return View();
         }
 
-        public ActionResult DonationHistory()
+        public ActionResult DonationHistory(string filter)
         {
             if (Session["Username"] == null || Session["Access"].ToString() != "Benefactor")
             {
@@ -180,7 +180,7 @@ namespace Zero_Hunger.Controllers
             var db = new ZeroHungerDbContext();
             var username = Session["UserName"].ToString();
             var Id = db.Users.FirstOrDefault(u => u.UserName == username).Id;
-            var donations = db.Foods.Where(i => i.BenefactorId == Id);
+            var donations = db.Foods.ToList();
             foreach(var donation in donations)
             {
                 if (donation.StatusName == "Pending" || donation.StatusName =="Accepted")
@@ -193,11 +193,19 @@ namespace Zero_Hunger.Controllers
                     }
                 }
             }
-            ViewBag.Donations = donations.ToList();
+            if (filter == "All")
+            {
+                ViewBag.Donations = db.Foods.Where(i => i.BenefactorId == Id);
+            }
+            else
+            {
+                ViewBag.Donations = db.Foods.Where(i => i.BenefactorId == Id && i.StatusName == filter);
+            }
+            ViewBag.filter = filter;
             return View();
         }
 
-        public ActionResult CollectedMeal(Guid id)
+        public ActionResult CollectedMeal(Guid id, string filter)
         {
             if (Session["Username"] == null || Session["Access"].ToString() != "Benefactor")
             {
@@ -216,7 +224,7 @@ namespace Zero_Hunger.Controllers
                         food.CompleteTime = DateTime.Now;
                         food.StatusName = "Expired";
                         db.SaveChanges();
-                        return RedirectToAction("DonationHistory");
+                        return RedirectToAction("DonationHistory", new { filter = filter });
                     }
                     food.StatusName = "Collected";
                     food.CompleteTime = DateTime.Now;
@@ -224,14 +232,14 @@ namespace Zero_Hunger.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("DonationHistory");
+                    return RedirectToAction("DonationHistory", new { filter = filter });
                 }
             }
-            return RedirectToAction("DonationHistory");
+            return RedirectToAction("DonationHistory", new { filter = filter });
 
         }
 
-        public ActionResult CancelledMeal(Guid id)
+        public ActionResult CancelledMeal(Guid id, string filter)
         {
             if (Session["Username"] == null || Session["Access"].ToString() != "Benefactor")
             {
@@ -246,24 +254,36 @@ namespace Zero_Hunger.Controllers
                 
                 if(food.StatusName == "Pending" || food.StatusName == "Accepted")
                 {
-                        if (food.ExpireTime <= DateTime.Now)
-                        {
-                            food.CompleteTime = DateTime.Now;
-                            food.StatusName = "Expired";
-                            db.SaveChanges();
-                            return RedirectToAction("DonationHistory");
-                        }
-                        food.StatusName = "Cancelled";
+                    if (food.ExpireTime <= DateTime.Now)
+                    {
+                        food.CompleteTime = DateTime.Now;
+                        food.StatusName = "Expired";
+                        db.SaveChanges();
+                        return RedirectToAction("DonationHistory", new { filter = filter});
+                    }
+                    food.StatusName = "Cancelled";
                     food.CompleteTime = DateTime.Now;
                     db.SaveChanges();
                 }
                 else
                 {
-                    return RedirectToAction("DonationHistory");
+                    return RedirectToAction("DonationHistory", new {filter=filter});
                 }
             }
             
-            return RedirectToAction("DonationHistory");
+            return RedirectToAction("DonationHistory", new { filter = filter });
+        }
+
+        public ActionResult Filter()
+        {
+            if (Session["Username"] == null || Session["Access"].ToString() != "Benefactor")
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            var db = new ZeroHungerDbContext();
+            var status = db.Statuses.ToList();
+            ViewBag.statuses = status;
+            return View();
         }
     }
 }

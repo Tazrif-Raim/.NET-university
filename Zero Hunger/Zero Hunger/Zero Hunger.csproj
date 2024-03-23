@@ -198,6 +198,8 @@
     <Content Include="Views\NGO\HireEmployee.cshtml" />
     <Content Include="Views\Auth\createAdmin.cshtml" />
     <Content Include="Views\NGO\FoodCollection.cshtml" />
+    <Content Include="Views\NGO\Filter.cshtml" />
+    <Content Include="Views\Benefactor\Filter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

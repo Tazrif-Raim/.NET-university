@@ -2,10 +2,10 @@
 @{
     ViewBag.Title = "FoodCollection";
 }
-<a href="@Url.Action("Dashboard", "NGO")">Back to Dashboard</a>
+<a href="@Url.Action("Filter", "NGO")">Back to Filter</a>
 
 
-<h2>FoodCollection</h2>
+<h2>Food Collection</h2>
 
 <table class="table table-bordered">
     <tr>
@@ -47,6 +47,7 @@
                 <th>
                     <form action="/NGO/assignEmployee" method="post">
                         <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="filter" value="@ViewBag.Filter"/>
                         <select name="employee">
                             @foreach (var employee in ViewBag.employees)
                             {

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Filter";
+}
+
+<h2>Filter</h2>
+
+<div class="form-horizontal">
+    <form action="/NGO/FoodCollection" class="form-group" method="get">
+        <select name ="filter" class="form-control">
+            <option value="All">All</option>
+            @foreach(var status in ViewBag.statuses)
+            {
+                <option value="@status.Name">@status.Name</option>
+            }
+        </select>
+        <input type="submit" value="Submit" class="btn btn-default"/>
+    </form>
+</div>
+
+<div><a href="@Url.Action("Dashboard", "NGO")">Back to Dashboard</a></div>
